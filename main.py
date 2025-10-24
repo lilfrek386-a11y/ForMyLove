@@ -30,7 +30,7 @@ async def get_index():
 @app.post("/send-invitation")
 def send_invitation(email: EmailRequest):
     try:
-        send_email(email_to=email)
+        send_email(email_request=email)
         return {"message": "Invitation sent successfully"}
     except Exception as e:
         print(f"Ошибка при отправке письма: {e}")
