@@ -10,7 +10,7 @@ app = FastAPI()
 app.mount("/static", StaticFiles(directory="front"), name="static")
 
 origins = [
-    "https://formylove-vhoi.onrender.com",
+    "https://formylove-ylbi.onrender.com",
     "http://localhost:8000",
 ]
 
