@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Служба любви</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body class="min-h-screen flex items-center justify-center p-4">
+    <div id="heart-container" class="fixed inset-0 z-0"></div>
+    <div
+      id="content"
+      class="z-10 w-full max-w-lg mx-auto p-6 md:p-10 rounded-2xl bg-stone-800 quest-container text-white"
+    >
+      <div id="start-music">
+        <h1 class="text-4xl font-extrabold mb-4 text-center text-red-500">
+          Служба любви
+        </h1>
+        <p class="text-lg mb-8 text-gray-300 leading-relaxed">
+          <span
+            >Нажми на кнопочку, и мы с тобой немного поговорим о нас...</span
+          >
+        </p>
+        <button
+          onclick="startQuestAndMusic()"
+          id="start-btn"
+          class="w-full bg-pink-600 hover:bg-pink-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300"
+        >
+          Начать...
+        </button>
+      </div>
+
+      <div id="stage-intro" class="hidden">
+        <h1 class="text-4xl font-extrabold mb-4 text-center text-red-500">
+          Любовь это мы
+        </h1>
+        <p class="text-lg mb-8 text-gray-300 leading-relaxed">
+          <span id="typing-area"></span>
+        </p>
+        <button
+          onclick="showStage('stage-quiz')"
+          id="intro-btn"
+          disabled
+          class="w-full bg-pink-600 opacity-50 cursor-not-allowed text-white font-bold py-3 px-4 rounded-lg"
+        >
+          А ведь...
+        </button>
+      </div>
+
+      <div id="stage-quiz" class="hidden">
+        <h2 class="text-3xl font-bold mb-6 text-center text-pink-500">
+          Вот так да...
+        </h2>
+        <p class="text-lg mb-8 text-gray-300 leading-relaxed">
+          <span id="quiz-intro-area"></span>
+        </p>
+        <button
+          onclick="checkQuiz()"
+          id="quiz-btn"
+          disabled
+          class="w-full bg-pink-600 opacity-50 cursor-not-allowed text-white font-bold py-3 px-4 rounded-lg"
+        >
+          Я тебя люблю. Сильно.
+        </button>
+      </div>
+
+      <div id="stage-balls" class="hidden text-center">
+        <h2 class="text-3xl font-bold mb-6 text-pink-500">
+          Последние 3 шага...
+        </h2>
+        <p class="mb-8 text-gray-300">Кликни на каждый шарик.</p>
+        <div class="flex justify-around mb-10">
+          <div
+            id="ball-1"
+            onclick="popBall(1)"
+            class="ball w-20 h-20 bg-red-600 rounded-full flex items-center justify-center text-3xl font-bold text-white shadow-xl"
+          >
+            1
+          </div>
+          <div
+            id="ball-2"
+            onclick="popBall(2)"
+            class="ball w-20 h-20 bg-red-600 rounded-full flex items-center justify-center text-3xl font-bold text-white shadow-xl"
+          >
+            2
+          </div>
+          <div
+            id="ball-3"
+            onclick="popBall(3)"
+            class="ball w-20 h-20 bg-red-600 rounded-full flex items-center justify-center text-3xl font-bold text-white shadow-xl"
+          >
+            3
+          </div>
+        </div>
+        <div id="ball-text" class="h-20 text-lg text-red-300 italic"></div>
+        <button
+          id="balls-next-btn"
+          onclick="showStage('stage-email')"
+          disabled
+          class="w-full bg-gray-500 text-white font-bold py-3 px-4 rounded mt-6 opacity-50 cursor-not-allowed transition duration-300"
+        >
+          ...
+        </button>
+      </div>
+
+      <div id="stage-email" class="hidden">
+        <h2 class="text-3xl font-bold mb-6 text-pink-500 text-center">
+          Готово! Последний штрих.
+        </h2>
+        <p class="mb-6 text-gray-300 text-center">
+          Чтобы перейти к финалу, введи свой адрес электронной почты и потом
+          посмотри, тебе пришло новое уведомление, может там что-то важное:
+        </p>
+        <input
+          type="email"
+          id="email-input"
+          placeholder="Твоя почта@gmail.com"
+          class="w-full p-3 rounded bg-gray-700 border border-red-500 focus:ring-2 focus:ring-pink-500 focus:border-pink-500 text-white"
+        />
+        <button
+          onclick="sendInvitation()"
+          id="send-btn"
+          class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-4 rounded mt-6 transition duration-300"
+        >
+          💌 Отправить Приглашение!
+        </button>
+        <div id="message-box" class="mt-4 p-3 rounded text-center hidden"></div>
+      </div>
+    </div>
+    <audio id="background-music" loop muted autoplay>
+      <source src="Project_35.mp3" type="audio/mpeg" />
+    </audio>
+    <script src="/static/script.js"></script>
+  </body>
+</html>
