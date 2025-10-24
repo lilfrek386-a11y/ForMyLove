@@ -1,11 +1,13 @@
 # /app_v1/config.py
 import os
 
+
 class Settings():
-    # Теперь читает из переменных окружения Render
-    smtp_email: str = os.environ.get("SMTP_USERNAME")
-    smtp_password: str = os.environ.get("SMTP_PASSWORD")
-    smtp_host: str = os.environ.get("SMTP_HOST", "smtp.gmail.com") # Default for Gmail
-    smtp_port: int = int(os.environ.get("SMTP_PORT", 465)) # Default for SSL/TLS
+    # Используем новые названия переменных для чистоты
+    email_user: str = os.environ.get("EMAIL_USER")
+    email_pass: str = os.environ.get("EMAIL_PASS")
+    email_host: str = os.environ.get("EMAIL_HOST", "smtp.gmail.com")
+    email_port: int = int(os.environ.get("EMAIL_PORT", 587))  # Порт 587 для TLS
+
 
 settings = Settings()
