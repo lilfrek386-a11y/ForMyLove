@@ -36,7 +36,7 @@ import smtplib
 from email.message import EmailMessage
 from app_v1.config import settings
 from app_v1.schemas import EmailRequest
-from text_for_email import text
+from app_v1.dependencies.text_for_email import text
 
 
 def send_email(email_request: EmailRequest):
