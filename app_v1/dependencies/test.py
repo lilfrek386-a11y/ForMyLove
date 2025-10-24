@@ -1,22 +1,39 @@
+# /app_v1/dependencies/test.py
+
 import smtplib
 from email.message import EmailMessage
 
+# Предполагаем, что ваши settings и схемы импортируются так:
 from app_v1.config import settings
-from app_v1.dependencies.text_for_email import text
 from app_v1.schemas import EmailRequest
+from .text_for_email import text
 
+def send_email(email_request: EmailRequest):
+    """
+    Отправляет приглашение на указанный email.
+    """
 
-def send_email(email_to: EmailRequest, email_text: str = text , email_from: str = settings.smtp_email, password: str = settings.smtp_password,):
+    # 1. Проверка настроек
+    if not settings.smtp_email or not settings.smtp_password:
+        raise ValueError("SMTP_USERNAME или SMTP_PASSWORD не настроены в переменных окружения.")
+
+    target_email = email_request.email  # Предполагаем, что email находится в поле .email объекта EmailRequest
+
     msg = EmailMessage()
-    msg['Subject'] = 'Приглашение'
-    msg['From'] = "Сервис для влюбленных"
-    msg['To'] = email_to
-    msg.set_content(email_text, charset='utf-8')
+    msg['Subject'] = '💌 Твое официальное приглашение на наше свидание!'
+    msg['From'] = settings.smtp_email
+    msg['To'] = target_email
+    msg.set_content(text, charset='utf-8')
 
-    target_email = email_to.email
-    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as server:
-        server.login(email_from, password)
+    # 2. Установка соединения и отправка
+    try:
+        with smtplib.SMTP_SSL(settings.smtp_host, settings.smtp_port) as server:
+            server.login(settings.smtp_email, settings.smtp_password)
+            server.sendmail(settings.smtp_email, target_email, msg.as_bytes())
+            print(f"Письмо успешно отправлено на {target_email}")
 
-        server.sendmail(email_from, target_email, msg.as_bytes())
-
-
+    except Exception as e:
+        # Эта ошибка (Network is unreachable) возникает на Render
+        print(f"Ошибка при отправке письма: {e}")
+        # Перебрасываем ошибку, чтобы FastAPI вернул 500
+        raise RuntimeError(f"Ошибка SMTP: {e}")
