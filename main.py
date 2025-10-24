@@ -9,14 +9,18 @@ app = FastAPI()
 
 app.mount("/static", StaticFiles(directory="front"), name="static")
 
+origins = [
+    "https://formylove-vhoi.onrender.com",
+    "http://localhost:8000",
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 @app.get("/", response_class=HTMLResponse)
 async def get_index():
     with open("front/index.html", "r", encoding="utf-8") as f:
