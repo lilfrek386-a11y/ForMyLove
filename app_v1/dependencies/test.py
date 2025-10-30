@@ -70,7 +70,7 @@
 # /app_v1/dependencies/test.py
 
 from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail
+from sendgrid.helpers.mail import Mail, Email
 
 from app_v1.config import settings
 from app_v1.schemas import EmailRequest
@@ -83,10 +83,15 @@ def send_email(email_request: EmailRequest):
         raise ValueError("Ключ SendGrid или адрес отправителя не настроены.")
 
     try:
+        from_email_object = Email(
+            email=settings.email_sender,
+            name="Служба по доставке любви в ваше сердце",  # <--- ВАШЕ ИМЯ ОТПРАВИТЕЛЯ
+        )
+
         message = Mail(
-            from_email=settings.email_sender,
+            from_email=from_email_object,
             to_emails=email_request.email,
-            subject="Люовь это мы.",
+            subject="Любовь это вы!",
             plain_text_content=text,
         )
 
