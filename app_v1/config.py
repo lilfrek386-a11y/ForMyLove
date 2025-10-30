@@ -1,4 +1,3 @@
-# /app_v1/config.py
 import os
 
 
